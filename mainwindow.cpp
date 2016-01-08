@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include <QDebug>
 #include <QGraphicsItem>
-MainWindow::MainWindow(QGraphicsScene *scene, QWidget *parent) :
-    QGraphicsView(scene,parent) {
+
+MainWindow::MainWindow(QWidget *parent) : QGraphicsView(parent){
     resize(800,600);
 }
 

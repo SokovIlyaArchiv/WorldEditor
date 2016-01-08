@@ -1,12 +1,13 @@
 #include "mainwindow.h"
-#include "map.h"
+#include "scene.h"
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    Map map;
-    map.load();
-    MainWindow w(map.getScene());
+    Scene scene;
+    MainWindow w;
+
+    w.setScene(&scene);
     w.show();
     return a.exec();
 }

@@ -14,7 +14,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    map.cpp
+    scene.cpp
 
 HEADERS  += mainwindow.h \
-    map.h
+    scene.h
