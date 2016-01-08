@@ -9,5 +9,5 @@ class Scene : public QGraphicsScene {
 public:
     Scene();
 private:
-    std::vector< std::shared_ptr<QGraphicsPixmapItem> > items;
+    std::vector< std::unique_ptr<QGraphicsPixmapItem> > items;
 };

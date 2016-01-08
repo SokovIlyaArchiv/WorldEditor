@@ -1,19 +1,19 @@
-#include "mainwindow.h"
+#include "viewer.h"
 #include <QDebug>
 #include <QGraphicsItem>
 
-MainWindow::MainWindow(QWidget *parent) : QGraphicsView(parent){
-    resize(800,600);
+Viewer::Viewer(QWidget *parent) : QGraphicsView(parent){
+    setFixedSize(800,600);
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+void Viewer::mouseMoveEvent(QMouseEvent *event) {
     QGraphicsView::mouseMoveEvent(event);
     if(event->buttons() == Qt::RightButton) {
         centerOn(mapToScene(event->pos()));
     }
 }
 
-void MainWindow::wheelEvent(QWheelEvent *event) {
+void Viewer::wheelEvent(QWheelEvent *event) {
         centerOn(mapToScene(event->pos()));
         if(event->delta() > 0) {
             scale(1.5,1.5);

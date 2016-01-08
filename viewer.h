@@ -1,10 +1,10 @@
 #include <QGraphicsView>
 #include <QMouseEvent>
-class MainWindow : public QGraphicsView {
+class Viewer : public QGraphicsView {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    Viewer(QWidget *parent = 0);
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent* pe);
 };
