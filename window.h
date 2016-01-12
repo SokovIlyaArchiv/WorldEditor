@@ -7,8 +7,13 @@
 
 class Window : public QWidget{
 public:
+
     Window(QWidget* parent = nullptr);
+
 private:
+
+    void createUI();
+
     Viewer* viewer;
     QVBoxLayout* buttonsLayout;
     QHBoxLayout* layout;

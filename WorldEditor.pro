@@ -13,11 +13,11 @@ TEMPLATE = app
 CONFIG += c++11
 
 SOURCES += main.cpp\
-    scene.cpp \
     viewer.cpp \
-    window.cpp
+    window.cpp \
+    data.cpp
 
 HEADERS  += \
-    scene.h \
     viewer.h \
-    window.h
+    window.h \
+    data.h

@@ -1,6 +1,10 @@
 #include "window.h"
 
 Window::Window(QWidget *parent) : QWidget(parent) {
+    createUI();
+}
+
+void Window::createUI() {
     viewer = new Viewer(this);
     layout = new QHBoxLayout(this);
     buttonsLayout = new QVBoxLayout(this);
