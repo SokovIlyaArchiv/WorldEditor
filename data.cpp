@@ -6,8 +6,9 @@
 #include <QJsonDocument>
 #include <QDebug>
 
-Data::Data() {
 
+
+Data::Data() {
 }
 
 void Data::load(QString fileName) {
@@ -17,11 +18,25 @@ void Data::load(QString fileName) {
         QJsonDocument json = QJsonDocument::fromJson(jsonFile.readAll(),&error);
         auto object = json.object();
         if(error.error == QJsonParseError::NoError) {
-            qDebug() << object.value("level-name").toString();
-            qDebug() << object.value("amount-objects").toInt();
-            for(auto value:object["objects"].toArray()) {
-                qDebug() << value.toObject()["filename"].toString();
+            mapName = object.value("map-name").toString();
+
+            for(auto value:object["textures"].toArray()) {
+                std::unique_ptr<Texture> texture(new Texture(QPixmap(value.toObject().value("filename").toString()),value.toObject().value("name").toString()));
+                textures.push_back( std::move(texture) );
             }
+
+            for(auto value:object["objects"].toArray()) {
+                std::unique_ptr<Object> object(new Object);
+                for(auto key:value.toObject().keys()) {
+                    object->addParameter(key,value.toObject().value(key).toString());
+                }
+                objects.push_back(std::move(object));
+            }
+            for(auto& value:objects) {
+                value->getParameters();
+                qDebug() << "\n\n\n";
+            }
+            qDebug() << objects.size();
         } else {
             qDebug() << error.errorString();
         }

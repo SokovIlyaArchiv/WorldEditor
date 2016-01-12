@@ -5,6 +5,7 @@ class Viewer : public QGraphicsView {
 
 public:
     Viewer(QWidget *parent = 0);
-    void mouseMoveEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent* pe);
+protected:
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void wheelEvent(QWheelEvent* pe) override;
 };
