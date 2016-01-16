@@ -3,6 +3,7 @@
 #include <QGraphicsItem>
 
 Viewer::Viewer(QWidget *parent) : QGraphicsView(parent){
+
     setFixedSize(800,600);
 }
 

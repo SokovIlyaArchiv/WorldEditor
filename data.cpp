@@ -6,9 +6,8 @@
 #include <QJsonDocument>
 #include <QDebug>
 
-
-
 Data::Data() {
+    mapName = new QString();
 }
 
 void Data::load(QString fileName) {
@@ -16,32 +15,40 @@ void Data::load(QString fileName) {
     if(jsonFile.open(QIODevice::ReadOnly)) {
         QJsonParseError error;
         QJsonDocument json = QJsonDocument::fromJson(jsonFile.readAll(),&error);
-        auto object = json.object();
+        auto jsonObject = json.object();
         if(error.error == QJsonParseError::NoError) {
-            mapName = object.value("map-name").toString();
-
-            for(auto value:object["textures"].toArray()) {
-                std::unique_ptr<Texture> texture(new Texture(QPixmap(value.toObject().value("filename").toString()),value.toObject().value("name").toString()));
-                textures.push_back( std::move(texture) );
+            qDebug() << "START READER DATA!";
+            *mapName = jsonObject.value("map-name").toString();
+            qDebug() << "LOADED TEXTURES";
+            for(auto object:jsonObject.value("textures").toArray()) {
+                std::pair<QString,QPixmap> pair;
+                pair.first = object.toObject().value("name").toString();
+                pair.second.load(object.toObject().value("filename").toString());
+                textures.insert(pair);
             }
-
-            for(auto value:object["objects"].toArray()) {
-                std::unique_ptr<Object> object(new Object);
-                for(auto key:value.toObject().keys()) {
-                    object->addParameter(key,value.toObject().value(key).toString());
+            qDebug() << "LOAD OBJECTS";
+            for(auto object:jsonObject.value("objects").toArray()) {
+                std::unique_ptr<Object> newObject(new Object);
+                newObject->setPixmap(textures[object.toObject().value("texture").toString()]);
+                for(auto parameter:object.toObject().keys()) {
+                    newObject->addParameter(parameter,object.toObject().value(parameter).toString());
                 }
-                objects.push_back(std::move(object));
+                objects.push_back(std::move(newObject));
             }
-            for(auto& value:objects) {
-                value->getParameters();
-                qDebug() << "\n\n\n";
-            }
-            qDebug() << objects.size();
+            qDebug() << "DATA READED";
         } else {
             qDebug() << error.errorString();
         }
     } else {
         qDebug() << "ERROR: FILE NOT OPEN!";
     }
+}
+
+Object *Data::getObject(int number) {
+    return objects.at(number).get();
+}
+
+int Data::getAmountObjects() {
+    return objects.size();
 }
 

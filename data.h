@@ -1,42 +1,19 @@
 #pragma once
 
-#include <vector>
-#include <map>
 #include <QGraphicsItem>
 #include <memory>
-#include <QDebug>
-struct Texture {
-    Texture(QPixmap pixmap, QString name) :
-        name(name)  {
-        item.setPixmap(pixmap);
-    }
-    QGraphicsPixmapItem item;
-    QString name;
-};
-
-class Object {
-public:
-    void addParameter(QString parameter,QString value) {
-        parameters.insert(std::pair<QString,QString>(parameter,value));
-    }
-    std::map<QString,QString> getParameters() {
-        for(auto value:parameters) {
-            qDebug() << value.first << value.second;
-        }
-    }
-
-private:
-    std::map<QString,QString> parameters;
-};
-
+#include <vector>
+#include <map>
+#include "object.h"
 class Data {
 public:
     Data();
+    Object* getObject(int number);
     void load(QString fileName);
     void save(QString fileName);
-    QGraphicsItem* getItem(int number);
+    int getAmountObjects();
 private:
-    QString mapName;
+    QString* mapName;
     std::vector< std::unique_ptr<Object> > objects;
-    std::vector< std::unique_ptr<Texture> > textures;
+    std::map< QString, QPixmap > textures;
 };

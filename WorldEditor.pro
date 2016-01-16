@@ -15,9 +15,11 @@ CONFIG += c++11
 SOURCES += main.cpp\
     viewer.cpp \
     window.cpp \
-    data.cpp
+    data.cpp \
+    object.cpp
 
 HEADERS  += \
     viewer.h \
     window.h \
-    data.h
+    data.h \
+    object.h
