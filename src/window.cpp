@@ -2,7 +2,7 @@
 Window::Window(QWidget *parent) : QWidget(parent) {
     createUI();
     createConnects();
-    data->load("data.txt");
+    data->load("../data/data.txt");
     for(int c = 0; c < data->getAmountObjects(); c++) {
         scene->addItem(data->getObject(c));
     }
@@ -29,6 +29,7 @@ void Window::createUI() {
 }
 
 void Window::createConnects() {
-    QObject::connect(viewer,SIGNAL(itemSelected(QGraphicsItem*)),data,SLOT(remove(QGraphicsItem*)));
+    QObject::connect(deleteObject,&QPushButton::clicked,viewer,&Viewer::removeItem);
+    QObject::connect(viewer,&Viewer::removeSelectableItem,data,&Data::remove);
 }
 

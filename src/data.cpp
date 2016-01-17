@@ -11,9 +11,11 @@ Data::Data(QObject* parent) : QObject(parent) {
 }
 
 void Data::remove(QGraphicsItem *item) {
+
     for(auto it = objects.begin(); it != objects.end(); ++it) {
         if(it->get() == item) {
             objects.erase(it);
+            break;
         }
     }
 }
