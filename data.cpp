@@ -6,9 +6,18 @@
 #include <QJsonDocument>
 #include <QDebug>
 
-Data::Data() {
-    mapName = new QString();
+Data::Data(QObject* parent) : QObject(parent) {
+        mapName = new QString;
 }
+
+void Data::remove(QGraphicsItem *item) {
+    for(auto it = objects.begin(); it != objects.end(); ++it) {
+        if(it->get() == item) {
+            objects.erase(it);
+        }
+    }
+}
+
 
 void Data::load(QString fileName) {
     QFile jsonFile(fileName);
@@ -29,7 +38,10 @@ void Data::load(QString fileName) {
             qDebug() << "LOAD OBJECTS";
             for(auto object:jsonObject.value("objects").toArray()) {
                 std::unique_ptr<Object> newObject(new Object);
+                newObject->setPos(object.toObject().value("posX").toInt(),object.toObject().value("posY").toInt());
                 newObject->setPixmap(textures[object.toObject().value("texture").toString()]);
+                newObject->setFlag(QGraphicsItem::ItemIsSelectable);
+                newObject->setFlag(QGraphicsItem::ItemIsMovable);
                 for(auto parameter:object.toObject().keys()) {
                     newObject->addParameter(parameter,object.toObject().value(parameter).toString());
                 }

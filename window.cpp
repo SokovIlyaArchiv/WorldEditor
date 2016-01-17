@@ -1,15 +1,16 @@
 #include "window.h"
-
 Window::Window(QWidget *parent) : QWidget(parent) {
     createUI();
-    data.load("data.txt");
-    for(int c = 0; c < data.getAmountObjects(); c++) {
-        scene->addItem(data.getObject(c));
+    createConnects();
+    data->load("data.txt");
+    for(int c = 0; c < data->getAmountObjects(); c++) {
+        scene->addItem(data->getObject(c));
     }
     viewer->setScene(scene);
 }
 
 void Window::createUI() {
+    data = new Data;
     viewer = new Viewer(this);
     layout = new QHBoxLayout(this);
     buttonsLayout = new QVBoxLayout(this);
@@ -25,5 +26,9 @@ void Window::createUI() {
     buttonsLayout->addWidget(saveData);
     layout->addWidget(viewer);
     setLayout(layout);
+}
+
+void Window::createConnects() {
+    QObject::connect(viewer,SIGNAL(itemSelected(QGraphicsItem*)),data,SLOT(remove(QGraphicsItem*)));
 }
 
