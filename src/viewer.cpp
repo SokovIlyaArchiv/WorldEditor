@@ -31,5 +31,3 @@ void Viewer::wheelEvent(QWheelEvent *event) {
             scale(0.66,0.66);
         }
 }
-
-

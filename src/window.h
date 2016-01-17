@@ -5,6 +5,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGraphicsScene>
+#include <QTableWidgetItem>
+#include <QTableWidget>
 #include "viewer.h"
 #include "data.h"
 
@@ -13,6 +15,7 @@ class Window : public QWidget{
 
 public:
     Window(QWidget* parent = nullptr);
+    ~Window();
 private:
     void createUI();
     void createConnects();
@@ -21,5 +24,7 @@ private:
     QHBoxLayout* layout;
     QGraphicsScene* scene;
     QVBoxLayout* buttonsLayout;
+    QTableWidget* paramsList;
+    QTableWidgetItem* value,* parameter;
     QPushButton* addObject,* deleteObject,* loadData,* saveData;
 };
