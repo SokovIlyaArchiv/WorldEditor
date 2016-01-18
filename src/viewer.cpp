@@ -5,15 +5,25 @@ Viewer::Viewer(QWidget *parent) : QGraphicsView(parent){
     setFixedSize(800,600);
 }
 
+QGraphicsItem *Viewer::getSelectedItem() {
+    if(scene()->items().size() != 0) {
+        return scene()->items().at(0);
+    } else {
+        return nullptr;
+    }
+}
+
 void Viewer::removeItem(bool) {
     if(scene()->selectedItems().size() != 0) {
-        auto item = *(scene()->selectedItems().begin());
-        emit removeSelectableItem(item);
+        emit selectedItem(getSelectedItem());
     }
 }
 
 void Viewer::mousePressEvent(QMouseEvent *event) {
     QGraphicsView::mousePressEvent(event);
+    if(!getSelectedItem()) {
+
+    }
 }
 
 void Viewer::mouseMoveEvent(QMouseEvent *event) {
@@ -21,6 +31,7 @@ void Viewer::mouseMoveEvent(QMouseEvent *event) {
     if(event->buttons() == Qt::RightButton) {
         centerOn(mapToScene(event->pos()));
     }
+
 }
 
 void Viewer::wheelEvent(QWheelEvent *event) {

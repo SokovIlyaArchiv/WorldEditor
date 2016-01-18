@@ -7,10 +7,11 @@ class Viewer : public QGraphicsView {
 
 public:
     Viewer(QWidget *parent = 0);
+    QGraphicsItem* getSelectedItem();
 public slots:
     void removeItem(bool);
 signals:
-    void removeSelectableItem(QGraphicsItem* );
+    void selectedItem(QGraphicsItem* );
 protected:
     virtual void mousePressEvent(QMouseEvent *event) override;
     virtual void mouseMoveEvent(QMouseEvent *event) override;

@@ -1,4 +1,5 @@
 #include "window.h"
+#include <QHeaderView>
 Window::Window(QWidget *parent) : QWidget(parent) {
     createUI();
     createConnects();
@@ -7,6 +8,7 @@ Window::Window(QWidget *parent) : QWidget(parent) {
         scene->addItem(data->getObject(c));
     }
     viewer->setScene(scene);
+    scene->setSceneRect(0,0,1000,1000);
 }
 
 Window::~Window() {
@@ -33,16 +35,17 @@ void Window::createUI() {
     layout->addWidget(viewer);
     layout->addWidget(paramsList);
     setLayout(layout);
-    paramsList->setRowCount(2);
     paramsList->setColumnCount(2);
     value = new QTableWidgetItem("Value");
     parameter = new QTableWidgetItem("Parameter");
     paramsList->setHorizontalHeaderItem(0,parameter);
     paramsList->setHorizontalHeaderItem(1,value);
+    paramsList->horizontalHeader()->setSectionResizeMode (0,QHeaderView::Stretch);
+    paramsList->horizontalHeader()->setSectionResizeMode (1,QHeaderView::ResizeToContents);
 }
 
 void Window::createConnects() {
     QObject::connect(deleteObject,&QPushButton::clicked,viewer,&Viewer::removeItem);
-    QObject::connect(viewer,&Viewer::removeSelectableItem,data,&Data::remove);
+    QObject::connect(viewer,&Viewer::selectedItem,data,&Data::remove);
 }
 
