@@ -6,8 +6,8 @@ Viewer::Viewer(QWidget *parent) : QGraphicsView(parent){
 }
 
 QGraphicsItem *Viewer::getSelectedItem() {
-    if(scene()->items().size() != 0) {
-        return scene()->items().at(0);
+    if(scene()->selectedItems().size() != 0) {
+        return scene()->selectedItems().at(0);
     } else {
         return nullptr;
     }
@@ -15,14 +15,14 @@ QGraphicsItem *Viewer::getSelectedItem() {
 
 void Viewer::removeItem(bool) {
     if(scene()->selectedItems().size() != 0) {
-        emit selectedItem(getSelectedItem());
+        emit getRemoveItem(getSelectedItem());
     }
 }
 
 void Viewer::mousePressEvent(QMouseEvent *event) {
     QGraphicsView::mousePressEvent(event);
-    if(!getSelectedItem()) {
-
+    if(getSelectedItem()) {
+        emit itemSelected(getSelectedItem());
     }
 }
 

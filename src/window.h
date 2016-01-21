@@ -16,6 +16,8 @@ class Window : public QWidget{
 public:
     Window(QWidget* parent = nullptr);
     ~Window();
+public  slots:
+    void setParameters(QGraphicsItem* );
 private:
     void createUI();
     void createConnects();
@@ -27,4 +29,6 @@ private:
     QTableWidget* paramsList;
     QTableWidgetItem* value,* parameter;
     QPushButton* addObject,* deleteObject,* loadData,* saveData;
+    std::vector<QTableWidgetItem* > paramsItems;
+    std::vector<QTableWidgetItem* > valuesItems;
 };

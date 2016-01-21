@@ -11,6 +11,7 @@ class Data : public QObject {
 public:
     Data(QObject* parent = nullptr);
     Object* getObject(int number);
+    Object* getObject(QGraphicsItem* item);
     void load(QString fileName);
     void save(QString fileName);
     int getAmountObjects();

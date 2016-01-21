@@ -15,14 +15,14 @@
 			"desciption":"THE MATRIX HAS YOU!"
 		},
 		{
-			"type":"Player",
-			"name":"Neo",
+			"type":"NPC",
+			"name":"John",
 			"texture":"Player",
 			"posX":300,
 			"posY":300,
-			"age":21,
+			"age":44,
 			"gender":"men",
-			"desciption":"THE MATRIX HAS YOU!"
+			"desciption":"TEST!"
 		}
 
 	]

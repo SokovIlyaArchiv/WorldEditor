@@ -11,7 +11,8 @@ public:
 public slots:
     void removeItem(bool);
 signals:
-    void selectedItem(QGraphicsItem* );
+    void itemSelected(QGraphicsItem* );
+    void getRemoveItem(QGraphicsItem* );
 protected:
     virtual void mousePressEvent(QMouseEvent *event) override;
     virtual void mouseMoveEvent(QMouseEvent *event) override;
