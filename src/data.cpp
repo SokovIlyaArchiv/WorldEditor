@@ -53,7 +53,7 @@ void Data::load(QString fileName) {
             qDebug() << error.errorString();
         }
     } else {
-        qDebug() << "ERROR: FILE NOT OPEN!";
+        qDebug() << "ERROR: FILE" << fileName << "NOT OPEN!";
     }
 }
 

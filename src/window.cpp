@@ -22,17 +22,28 @@ Window::~Window() {
 }
 
 void Window::setParameters(QGraphicsItem *item) {
-    auto object = data->getObject(item);
-    paramsList->setRowCount(object->getAmountKeys());
-    while(paramsItems.size() < object->getAmountKeys()) {
-        paramsItems.push_back(new QTableWidgetItem);
-        valuesItems.push_back(new QTableWidgetItem);
-        paramsList->setItem(paramsItems.size()-1,0,paramsItems.at(paramsItems.size()-1));
-        paramsList->setItem(valuesItems.size()-1,1,valuesItems.at(valuesItems.size()-1));
-    }
-    for(size_t c = 0; c < paramsItems.size(); c++) {
-        paramsList->item(c,0)->setText(object->getKey(c));
-        paramsList->item(c,1)->setText(object->getValue(object->getKey(c)));
+    if(item != nullptr) {
+        auto object = data->getObject(item);
+        while(paramsList->rowCount() != 0) {
+            paramsList->removeRow(0);
+        }
+        paramsList->setRowCount(object->getAmountKeys());
+        while(paramsItems.size() < object->getAmountKeys()) {
+            paramsItems.push_back(new QTableWidgetItem);
+            valuesItems.push_back(new QTableWidgetItem);
+        }
+        for(size_t c = 0; c < paramsList->rowCount(); c++) {
+            if(!paramsList->item(c,0)) {
+                paramsList->setItem(c,0,paramsItems.at(c));
+            }
+            if(!paramsList->item(c,1)) {
+                paramsList->setItem(c,1,valuesItems.at(c));
+            }
+            paramsList->item(c,0)->setText(object->getKey(c));
+            paramsList->item(c,1)->setText(object->getValue(object->getKey(c)));
+        }
+    } else {
+        paramsList->setRowCount(0);
     }
 }
 
@@ -63,13 +74,13 @@ void Window::createUI() {
     paramsList->horizontalHeader()->setSectionResizeMode (0,QHeaderView::Stretch);
     paramsList->horizontalHeader()->setSectionResizeMode (1,QHeaderView::Stretch);
     connect(paramsList,&QTableWidget::itemChanged,[](QTableWidgetItem* item) {
-                                                    qDebug() << item->text();
+                                                    //qDebug() << item->text();
                                                   });
 }
 
 void Window::createConnects() {
     connect(deleteObject,&QPushButton::clicked,viewer,&Viewer::removeItem);
     connect(viewer,&Viewer::getRemoveItem,data,&Data::remove);
-    connect(viewer,&Viewer::itemSelected,this,&Window::setParameters);
+    connect(viewer,&Viewer::clicked,this,&Window::setParameters);
 }
 

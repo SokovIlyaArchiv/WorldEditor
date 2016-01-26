@@ -20,8 +20,6 @@
 			"texture":"Player",
 			"posX":300,
 			"posY":300,
-			"age":44,
-			"gender":"men",
 			"desciption":"TEST!"
 		}
 

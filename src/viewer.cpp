@@ -21,9 +21,7 @@ void Viewer::removeItem(bool) {
 
 void Viewer::mousePressEvent(QMouseEvent *event) {
     QGraphicsView::mousePressEvent(event);
-    if(getSelectedItem()) {
-        emit itemSelected(getSelectedItem());
-    }
+    emit clicked(getSelectedItem());
 }
 
 void Viewer::mouseMoveEvent(QMouseEvent *event) {
@@ -31,7 +29,6 @@ void Viewer::mouseMoveEvent(QMouseEvent *event) {
     if(event->buttons() == Qt::RightButton) {
         centerOn(mapToScene(event->pos()));
     }
-
 }
 
 void Viewer::wheelEvent(QWheelEvent *event) {
