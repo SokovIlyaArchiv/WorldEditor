@@ -39,6 +39,7 @@ void Window::setParameters(QGraphicsItem *item) {
             if(!paramsList->item(c,1)) {
                 paramsList->setItem(c,1,valuesItems.at(c));
             }
+            qDebug() << paramsList->item(c,1);
             paramsList->item(c,0)->setText(object->getKey(c));
             paramsList->item(c,1)->setText(object->getValue(object->getKey(c)));
         }
