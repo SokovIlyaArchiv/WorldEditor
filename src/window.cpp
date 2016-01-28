@@ -29,6 +29,7 @@ Window::~Window() {
     while(paramsList->rowCount() != 0) {
         delete paramsList->item(0,0);
         delete paramsList->item(0,1);
+        paramsList->removeRow(0);
     }
     delete parameter;
     delete value;
@@ -106,10 +107,21 @@ void Window::createConnects() {
     connect(buttons.at(static_cast<int>(ButtonID::DeleteObject)), &QPushButton::clicked,
             viewer, &Viewer::removeItem);
     connect(buttons.at(static_cast<int>(ButtonID::DeleteObject)), &QPushButton::clicked,
-            [&](){paramsList->setRowCount(0);});
+            [&]() {
+                    paramsList->setRowCount(0);
+                  }
+    );
     connect(viewer, &Viewer::getRemoveItem,
             data, &Data::remove);
     connect(viewer, &Viewer::clicked,
             this, &Window::setParameters);
+    connect(viewer, &Viewer::released,[&](QGraphicsItem* item) {
+        auto object = data->getObject(item);
+        if(object != nullptr) {
+            object->setValue("posX",QString::number(item->pos().x()));
+            object->setValue("posY",QString::number(item->pos().y()));
+            setParameters(item);
+        }
+    });
 }
 

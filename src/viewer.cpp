@@ -20,6 +20,11 @@ void Viewer::removeItem(bool) {
     }
 }
 
+void Viewer::mouseReleaseEvent(QMouseEvent *event) {
+    QGraphicsView::mouseReleaseEvent(event);
+    emit released(getSelectedItem());
+}
+
 
 
 void Viewer::mousePressEvent(QMouseEvent *event) {

@@ -8,6 +8,10 @@ void Object::addParameter(QString parameter, QString value) {
     parameters.insert(pair);
 }
 
+void Object::setValue(QString parameter, QString value) {
+    parameters.at(parameter) = value;
+}
+
 QString Object::getValue(QString parameter) {
     return parameters.at(parameter);
 }
