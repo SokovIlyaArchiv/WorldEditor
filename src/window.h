@@ -1,34 +1,44 @@
 #pragma once
-
-#include <QWidget>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGraphicsScene>
+#include <memory>
 #include <QTableWidgetItem>
-#include <QTableWidget>
-#include "viewer.h"
-#include "data.h"
+class QGraphicsScene;
+class QGraphicsItem;
+class QHBoxLayout;
+class QVBoxLayout;
+class QTableWidget;
+class QPushButton;
+class Data;
+class Viewer;
 
-class Window : public QWidget{
+
+
+class Window: public QWidget {
+
     Q_OBJECT
 
 public:
-    Window(QWidget* parent = nullptr);
+    explicit Window(QWidget* parent = nullptr);
     ~Window();
-public  slots:
-    void setParameters(QGraphicsItem* );
+
+public slots:
+    void setParameters(QGraphicsItem*);
+
 private:
-    void createUI();
     void createConnects();
+    void createUI();
+    void createButtons();
+    void createParametersTable();
+
+    QGraphicsScene* scene;
+
     Data* data;
     Viewer* viewer;
+
     QHBoxLayout* layout;
-    QGraphicsScene* scene;
     QVBoxLayout* buttonsLayout;
     QTableWidget* paramsList;
-    QTableWidgetItem* value,* parameter;
-    QPushButton* addObject,* deleteObject,* loadData,* saveData;
-    std::vector<QTableWidgetItem* > paramsItems;
-    std::vector<QTableWidgetItem* > valuesItems;
+    QTableWidgetItem* value,
+                    * parameter;
+    enum class ButtonID {AddObject, DeleteObject, LoadData, SaveData};
+    std::vector<QPushButton*> buttons;
 };
